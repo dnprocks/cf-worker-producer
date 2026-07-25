@@ -25,13 +25,13 @@
 	"queues": {
 		"consumers": [
 			{
-				"queue": "my-queue"
+				"queue": "whatsapp-messages"
 			}
 		],
 		"producers": [
 			{
-				"binding": "MY_QUEUE",
-				"queue": "my-queue"
+				"binding": "MSG_QUEUE",
+				"queue": "whatsapp-messages"
 			}
 		]
 	},

@@ -1,30 +1,13 @@
-type Bindings = {
-	// META_VERIFY_TOKEN: string;
-	VPS_WEBHOOK_URL: string;
-	VPS_AUTH_TOKEN: string;
-	MSG_QUEUE: Queue;
-};
-
-type MessagePayload = {
-	id: string;
-	timestamp: number;
-	body: any;
-};
+import { Bindings, MessagePayload } from './types';
+import server from './server';
 
 export default {
 	// Our fetch handler is invoked on a HTTP request: we can send a message to a queue
 	// during (or after) a request.
 	// https://developers.cloudflare.com/queues/platform/javascript-apis/#producer
-	async fetch(req, env, ctx): Promise<Response> {
-		// To send a message on a queue, we need to create the queue first
-		// https://developers.cloudflare.com/queues/get-started/#3-create-a-queue
-		await env.MY_QUEUE.send({
-			url: req.url,
-			method: req.method,
-			headers: Object.fromEntries(req.headers),
-		});
-		return new Response('Sent message to the queue');
-	},
+	// To send a message on a queue, we need to create the queue first
+	// https://developers.cloudflare.com/queues/get-started/#3-create-a-queue
+	fetch: server.fetch,
 	// The queue handler is invoked when a batch of messages is ready to be delivered
 	// https://developers.cloudflare.com/queues/platform/javascript-apis/#messagebatch
 	async queue(batch: MessageBatch<MessagePayload>, env: Bindings): Promise<void> {

@@ -1,0 +1,9 @@
+@URL_BASE =http://localhost:8787
+
+###
+POST {{URL_BASE}}/webhook
+Content-Type: application/json
+
+{
+	"object": "whatsapp_business_account"
+}
