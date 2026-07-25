@@ -23,6 +23,11 @@
 			}
 		]
 	},
+
+	"vars": {
+		"VPS_WEBHOOK_URL": "https://quiet-panda-78.webhook.cool"
+	},
+
 	"upload_source_maps": true,
 	"compatibility_flags": [
 		"nodejs_compat"
