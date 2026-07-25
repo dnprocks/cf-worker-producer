@@ -9,26 +9,28 @@
 	"compatibility_date": "2026-07-25",
 	"observability": {
 		"enabled": true,
-		// "head_sampling_rate": 1,
-		// "logs": {
-		// 	"enabled": true,
-		// 	"head_sampling_rate": 1,
-		// 	"persist": true,
-		// 	"invocation_logs": true
-		// },
-		// "traces": {
-		// 	"enabled": false,
-		// 	"persist": true,
-		// 	"head_sampling_rate": 1
-		// }
+		"traces": {
+			"enabled": true,
+			// Must match the destination name in the Cloudflare dashboard
+			"destinations": [
+				"grafana-traces"
+			]
+		},
+		"logs": {
+			"enabled": true,
+			// Must match the destination name in the Cloudflare dashboard
+			"destinations": [
+				"grafana-logs"
+			]
+		}
 	},
 	"queues": {
 		"consumers": [
 			{
 				"queue": "whatsapp-messages",
 				"max_batch_size": 1, // Processa 1 por 1 para manter o controle individual do retry
-				"max_batch_timeout": 5, //# Espera no máximo 5s por lote
-				"max_retries": 3, //Tenta no máximo 5 vezes antes de ir para DLQ
+				"max_batch_timeout": 5, //# Espera no mÃ¡ximo 5s por lote
+				"max_retries": 3, //Tenta no mÃ¡ximo 5 vezes antes de ir para DLQ
 				"dead_letter_queue": "meta-messages-dlq" // Fila de mensagens mortas (opcional)
 			}
 		],
