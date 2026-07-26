@@ -22,15 +22,16 @@
 			"destinations": [
 				"grafana-logs"
 			]
-		}
+		},
+		"head_sampling_rate": 1
 	},
 	"queues": {
 		"consumers": [
 			{
 				"queue": "whatsapp-messages",
 				"max_batch_size": 1, // Processa 1 por 1 para manter o controle individual do retry
-				"max_batch_timeout": 5, //# Espera no mÃÂ¡ximo 5s por lote
-				"max_retries": 3, //Tenta no mÃÂ¡ximo 5 vezes antes de ir para DLQ
+				"max_batch_timeout": 5, //# Espera no mÃÂÃÂ¡ximo 5s por lote
+				"max_retries": 3, //Tenta no mÃÂÃÂ¡ximo 5 vezes antes de ir para DLQ
 				"dead_letter_queue": "meta-messages-dlq" // Fila de mensagens mortas (opcional)
 			}
 		],
