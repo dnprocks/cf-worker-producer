@@ -15,20 +15,27 @@ app.get('/webhook', (c) => {
 	return c.text('Forbidden', 403);
 });
 
-// 2. PRODUTOR: RECEBE DA META E ENFILEIRA (POST)
+
+
+// 2. PRODUTOR: RECEBE DA META E EVOLUTIONAPI E ENFILEIRA (POST)
 app.post('/webhook', async (c) => {
 	const body = await c.req.json();
 
-	console.log('Recebido da Meta:', JSON.stringify(body));
+	console.log('Recebido do webhook:', JSON.stringify(body));
 
-	if (body.object === 'whatsapp_business_account') {
+	const shouldQueue =
+		body.object === 'whatsapp_business_account' ||
+		Boolean(body.event) ||
+		Boolean(body.data);
+
+	if (shouldQueue) {
 		const payload: MessagePayload = {
 			id: crypto.randomUUID(),
 			timestamp: Date.now(),
 			body,
 		};
 
-		// Enfileira de forma assíncrona para responder à Meta o mais rápido possível
+		// Enfileira de forma assíncrona para responder ao webhook o mais rápido possível
 		c.executionCtx.waitUntil(c.env.MSG_QUEUE.send(payload));
 	}
 
